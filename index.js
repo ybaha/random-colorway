@@ -1,21 +1,51 @@
-let canvas = document.createElement("canvas")
-let ctx = canvas.getContext("2d")
+const imageDiv = document.getElementById("img")
 
-document.body.appendChild(canvas)
+const canvas = document.createElement("canvas")
+const ctx = canvas.getContext("2d")
 
-let widthC = 300
-let heightC = 300
+canvas.style.display = "block"
+canvas.style.margin = "0 auto"
 
-let changeRate = 10
+imageDiv.appendChild(canvas)
 
-let pixelSize = 10
+const inputs = document.getElementsByClassName("input")
+const button = document.getElementById("btn")
 
-let initialRgb = [200, 200, 200]
 
-canvas.width = widthC
-canvas.height = heightC
+let optionsArray = []
 
-let randomizer = (rgbValue) => {
+let widthC = optionsArray[0]
+let heightC = optionsArray[1]
+
+let changeRate = optionsArray[2]
+
+let pixelSize = optionsArray[3]
+
+
+const inputCheck = () => {
+  let j = 0
+  for (let i = 0; i < inputs.length; i++) {
+    if (inputs[i].value !== "") {
+      optionsArray[i] = parseInt(inputs[i].value)
+      j++
+    }
+  }
+
+  if (j === inputs.length) {
+    draw(optionsArray[0], optionsArray[1], optionsArray[2], optionsArray[3])
+    j = 0
+  }
+}
+
+
+
+Array.from(inputs).forEach(function (e) {
+  e.addEventListener("focusout", inputCheck);
+});
+
+button.addEventListener("click", inputCheck)
+
+const randomizer = (rgbValue, changeRate) => {
   let sign = Math.random()
   let num = Math.random() * changeRate
   if (sign < 0.5 || rgbValue < 0) {
@@ -28,55 +58,58 @@ let randomizer = (rgbValue) => {
   return rgbValue
 }
 
-let row = []
+const draw = (widthC, heightC, pixelSize, changeRate) => {
 
-let column = []
+  let initialRgb = [Math.random() * 255, Math.random() * 255, Math.random() * 255]
 
-let lastOfRow = []
+  canvas.width = widthC
+  canvas.height = heightC
 
-for (let j = 0; j < heightC; j += pixelSize) {
-  row = []
-  for (let i = 0; i < widthC; i += pixelSize ) {
+  let row = []
 
-    let rgb = []
+  let column = []
 
-    console.log(i)
+  let lastOfRow = []
 
-    if (i == 0 && j == 0) {
-      rgb = initialRgb
+  for (let j = 0; j < heightC; j += pixelSize) {
+    row = []
+    for (let i = 0; i < widthC; i += pixelSize) {
+
+      let rgb = []
+
+      if (i == 0) {
+        rgb = initialRgb
+      }
+
+      // && j == 0
+
+      // else if (i == 0 && j != 0){
+      //   rgb = lastOfRow
+      // }
+
+      else {
+        rgb = row[(i / pixelSize) - 1]
+      }
+
+      rgb[0] = randomizer(rgb[0], changeRate)
+      rgb[1] = randomizer(rgb[1], changeRate)
+      rgb[2] = randomizer(rgb[2], changeRate)
+
+      ctx.fillStyle = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+      ctx.fillRect(i, j, pixelSize, pixelSize)
+
+      row.push(rgb)
+
+      // if(i == widthC){
+      //   lastOfRow = rgb
+      // }
+
     }
 
-    else if (i == 0 && j != 0){
-      rgb = lastOfRow
-    }
-
-    else{
-      rgb = row[ (i/pixelSize) - 1 ]
-    }
-
-    rgb[0] = randomizer(rgb[0])
-    rgb[1] = randomizer(rgb[1])
-    rgb[2] = randomizer(rgb[2])
-
-    ctx.fillStyle = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-    ctx.fillRect(i,j,pixelSize,pixelSize)
-
-    row.push(rgb)
-
-    if(i == widthC){
-      lastOfRow = rgb
-    }
+    // column.push(row)
 
   }
 
-  column.push(row)
-
 }
 
-console.log(row[0])
-console.log(row[10])
-console.log(row[20])
-
-
-
-
+draw(400,400,5,1)

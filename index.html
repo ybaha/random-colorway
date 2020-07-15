@@ -4,9 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link href="style.css" rel="stylesheet">
 </head>
 <body>
-  
+
+
+  <div id="img" ></div>
+
+
+  <div id="options">
+    <input placeholder="Width" value="400" class="input" type="number" onkeyup="if(this.value<0){this.value= this.value * -1}">
+    <input placeholder="Heigth" value="400" class="input" type="number" onkeyup="if(this.value<0){this.value= this.value * -1}">
+    <input placeholder="Pixel Size" value="5" class="input" type="number" onkeyup="if(this.value<0){this.value= this.value * -1}">
+    <input placeholder="Change Rate" value="2" class="input" type="number" onkeyup="if(this.value<0){this.value= this.value * -1}">
+    <button id="btn">Generate</button>
+  </div>
+
 
   <script src="index.js"></script>
 </body>

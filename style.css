@@ -1,0 +1,39 @@
+
+#img{
+  display: block;
+  margin: 0 auto;
+}
+
+#options{
+  display: flex;
+  justify-content: center;
+
+  height: 100px;
+}
+
+.input{
+  height: 30px;
+  width: 80px;
+  text-align: center;
+  align-self: center;
+  align-content: center;
+}
+
+
+
+#btn{
+  height: 36px;
+  align-self: center;
+  align-content: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
